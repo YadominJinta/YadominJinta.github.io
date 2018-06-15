@@ -1,5 +1,5 @@
 ---
-layout: posts
+layout: post
 date: 2018-06-15
 tags: Linux
 title: 在Fedora28上安装网易云音乐
