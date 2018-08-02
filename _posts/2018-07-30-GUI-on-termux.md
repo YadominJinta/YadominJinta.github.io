@@ -27,6 +27,9 @@ pkg in tiger tigervnc i3 aterm
 
 ### 启动VNC
 ```
+# 定义DISPLAY变量，建议加到.bashrc里
+$ export DISPLAY=:1
+
 $ vncserver :1 -geometry 1920x1080                          
 # 端口为：1，分辨率为1920x180
 You will require a password to access your desktops.
@@ -42,4 +45,19 @@ Creating default config /data/data/com.termux/files/home/.vnc/config
 Starting applications specified in /data/data/com.termux/files/home/.vnc/xstartup
 Log file is /data/data/com.termux/files/home/.vnc/localhost:1.log
 ```
-现在我们打开之前下载的VNC Viewer，点击
+现在我们打开之前下载的VNC Viewer，点击右下角的+号，在Address下面填上127.0.0.1:1，Name 随便填就行，不影响，点击Create -> Connect，会出现一个不安全链接的Warn，去掉Warn Me Everytime，点击OK，然后输入密码，点击Remember，然后Ok，就可以链接上了。  
+![vnc1](/assets/img/vnc1.png)  
+![vnc2](/assets/img/vnc2.png)  
+  
+
+## 非原生
+想必你一定已经注意到了，Extra源里实在是没什么可以玩的，没有什么GUI应用。那么我们还有另一种玩法，用proot启动正常的Linux发行版，在Linux里面启动vnc。  
+但是，怎么安装别的Linux发行版呢？  
+这里我们可以用我正在维护的[atilo](https://github.com/YadominJinta/atilo)，按照README中的说明，安装一个发行版，这里以我最喜欢的Fedora28为例。  
+
+```
+$ startfedora
+# dnf makecache
+# dnf install tigervnc-server 
+# dnf groupinstall 
+```
