@@ -59,5 +59,4 @@ Log file is /data/data/com.termux/files/home/.vnc/localhost:1.log
 $ startfedora
 # dnf makecache
 # dnf install tigervnc-server 
-# dnf groupinstall 
 ```
