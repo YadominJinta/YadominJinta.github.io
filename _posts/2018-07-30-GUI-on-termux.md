@@ -44,6 +44,13 @@ Creating default startup script /data/data/com.termux/files/home/.vnc/xstartup
 Creating default config /data/data/com.termux/files/home/.vnc/config
 Starting applications specified in /data/data/com.termux/files/home/.vnc/xstartup
 Log file is /data/data/com.termux/files/home/.vnc/localhost:1.log
+
+# 如果你需要使用i3，请vim ~/.vnc/xstartup
+---  twm &
++++  i3-wm &
+
+# 你在重启VNC的时候可能会遇到关于X lock之类的报错，请
+$ rm -rf $PREFIX/tmp/.X*
 ```
 现在我们打开之前下载的VNC Viewer，点击右下角的+号，在Address下面填上127.0.0.1:1，Name 随便填就行，不影响，点击Create -> Connect，会出现一个不安全链接的Warn，去掉Warn Me Everytime，点击OK，然后输入密码，点击Remember，然后Ok，就可以链接上了。  
 ![vnc1](/assets/img/vnc1.png)  
@@ -58,5 +65,5 @@ Log file is /data/data/com.termux/files/home/.vnc/localhost:1.log
 ```
 $ startfedora
 # dnf makecache
-# dnf install tigervnc-server 
+# dnf install tigervnc-server i3
 ```
