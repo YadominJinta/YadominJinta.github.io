@@ -9,7 +9,7 @@ tags: [KTPI]
 ## Windows
 首先，看看你的电脑有没有打开这个功能，按照微软官方的方法，用管理员打开Powershell。
 
-```
+``` PowerShell
 # Install the PowerShell Module
 PS> Install-Module SpeculationControl
 
@@ -30,7 +30,7 @@ PS> # Reset the execution policy to the original state
 PS> Set-ExecutionPolicy $SaveExecutionPolicy -Scope Currentuser 
 ```
 如果打开的话应该能看到
-```
+``` PowerShell
 Windows OS support for branch target injection mitigation is present: True
 
 Windows OS support for branch target injection mitigation is enabled: True
@@ -39,7 +39,7 @@ Windows OS support for branch target injection mitigation is enabled: True
 所以我们该如何关闭呢？  
 这个功能是通过更新KB4056892来实现的，卸载它应该是有效的，但是治标不治本，以后Windows更新还是会装上的。  
 所以以管理员打开Powershell，输入`regedit.exe`，先把当前的注册表备份下来，然后
-```
+``` cmd
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverride /t REG_DWORD /d 3 /f
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverrideMask /t REG_DWORD /d 3 /f
 ```
@@ -53,7 +53,7 @@ Ok!
 
 ## Linux
 Linux的话这个补丁是写进内核的，所以有没有开启就看你发行版的心情了。在Fedora上，4.11.14以后的内核都是打开。检查一下你的电脑。
-```
+``` bash
 $ dmesg |grep "page table"
 [    0.000000] Kernel/User page tables isolation: enabled 
 ```

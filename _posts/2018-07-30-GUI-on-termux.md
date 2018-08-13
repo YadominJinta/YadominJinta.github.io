@@ -11,7 +11,7 @@ title: 在termux上使用图形化
 
 ### 添加仓库
 Termux的源中是没有X的，所以为了安装X，我们在这里添加一个社区源——[Termix-Extra-Packages](https://github.com/xeffyr/termux-extra-packages)
-```
+``` bash
 # 安装依赖
 pkg in dirmngr
 # 添加密钥
@@ -26,7 +26,7 @@ pkg in tiger tigervnc i3 aterm
 ```
 
 ### 启动VNC
-```
+``` bash
 # 定义DISPLAY变量，建议加到.bashrc里
 $ export DISPLAY=:1
 
@@ -62,7 +62,7 @@ $ rm -rf $PREFIX/tmp/.X*
 但是，怎么安装别的Linux发行版呢？  
 这里我们可以用我正在维护的[atilo](https://github.com/YadominJinta/atilo)，按照README中的说明，安装一个发行版，这里以我最喜欢的Fedora28为例。  
 
-```
+``` bash
 $ startfedora
 # dnf makecache
 # dnf install tigervnc-server i3

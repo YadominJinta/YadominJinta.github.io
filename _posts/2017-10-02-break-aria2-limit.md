@@ -16,55 +16,55 @@ Aria2是一个非常好的下载器，不管在那个平台上，都以快著称
 下载源码后解压`tar xvf aria2*`然后进入目录aria*/src，找到OptionHandlerFactory.cc,`vim OptionHandlerFactory.cc`。  
 接下来的内容请大家自行使用vim的搜索功能
 将
-```
+``` cpp
 OptionHandler* op(new NumberOptionHandler(PREF_MAX_CONNECTION_PER_SERVER,
                                                TEXT_MAX_CONNECTION_PER_SERVER,
                                                "1", 1, 16, 'x'));
 ```
 修改为
-```
+``` cpp
 OptionHandler* op(new NumberOptionHandler(PREF_MAX_CONNECTION_PER_SERVER,
                                                TEXT_MAX_CONNECTION_PER_SERVER,
                                                "128", 1, -1, 'x'));
 ```
 将
-```
+``` cpp
 PREF_MIN_SPLIT_SIZE, TEXT_MIN_SPLIT_SIZE, "20M", 1_m, 1_g, 'k'));
 ```
 修改为
-```
+``` cpp
 PREF_MIN_SPLIT_SIZE, TEXT_MIN_SPLIT_SIZE, "4K", 1_k, 1_g, 'k'));
 ```
 将
-```
+``` cpp
 PREF_CONNECT_TIMEOUT, TEXT_CONNECT_TIMEOUT, "60", 1, 600));
 ```
 修改为
-```
+``` cpp
 PREF_CONNECT_TIMEOUT, TEXT_CONNECT_TIMEOUT, "30", 1, 600));
 ```
 将
-```
+``` cpp
 PREF_PIECE_LENGTH, TEXT_PIECE_LENGTH, "1M", 1_m, 1_g));
 ```
 修改为
-```
+``` cpp
 PREF_PIECE_LENGTH, TEXT_PIECE_LENGTH, "4k", 1_k, 1_g));
 ```
 将
-```
+``` cpp
 new NumberOptionHandler(PREF_RETRY_WAIT, TEXT_RETRY_WAIT, "0", 0, 600));
 ```
 修改为
-```
+``` cpp
 new NumberOptionHandler(PREF_RETRY_WAIT, TEXT_RETRY_WAIT, "2", 0, 600));
 ```
 将
-```
+``` cpp
 new NumberOptionHandler(PREF_SPLIT, TEXT_SPLIT, "5", 1, -1, 's'));
 ```
 修改为
-```
+``` cpp
 new NumberOptionHandler(PREF_SPLIT, TEXT_SPLIT, "8", 1, -1, 's'));
 ```
 
@@ -74,11 +74,11 @@ new NumberOptionHandler(PREF_SPLIT, TEXT_SPLIT, "8", 1, -1, 's'));
 这部分没什么好讲的，进入aria2的目录  
 
 在Fedora测试后，需要
-```
+``` bash
 sudo dnf install openssl openssl-devel libssh2 libssh-devel libxml2 libxml2-devel c-ares c-ares-devel libsqlite3x libsqlite3x-devel
 ```
 才能够开启全部功能，其他发行版请自行尝试，包名应该差不多，Ubuntu上一般是xx-dev的头文件包(Arch:头文件包是啥).
-```
+``` bash
 ./configure --with-libxml2
 make -j n
 sudo make install
@@ -89,7 +89,7 @@ sudo make install
 
 
 测试一下
-```
+``` bash
 aria2c -x 256 http://124.228.42.246/tech.down.sina.com.cn/20170601/48759a2b/GoogleChrome.dmg?fn=&ssig=cq0ei0QbzC&Expires=1506993310&KID=sae,230kw3wk15&ip=1506914110,36.5.54.145&corp=1
 ```
 嗯，再也不会出现16线程的报错了。

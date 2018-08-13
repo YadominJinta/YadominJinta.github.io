@@ -8,7 +8,7 @@ title: 在Fedora28上安装网易云音乐
 Fedora28升级以来，我一直没能找到打包好的网易云。  
 在27的时候有[yelanxin/netease-cloud-music](https://copr.fedorainfracloud.org/coprs/yelanxin/netease-cloud-music/),但是作者一直没有更新到28，而且28在依赖上也有一些不同，直接安装27的包会出现依赖错误。所以应该怎么在Fedora28上安装网易云音乐呢？我想到了手动安装的方法。
 
-```
+``` bash
 # 打开仓库
 sudo yum install -y --nogpgcheck https://mirrors.tuna.tsinghua.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.tuna.tsinghua.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install -y fedora-workstation-repositories
