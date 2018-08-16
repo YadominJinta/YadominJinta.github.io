@@ -64,6 +64,18 @@ $ rm -rf $PREFIX/tmp/.X*
 
 ``` bash
 $ startfedora
-# dnf makecache
-# dnf install tigervnc-server i3
+dnf makecache
+dnf install tigervnc-server 
+dnf groupinstall LXDE
+vncserver :1
+# 与上面相同
+vim ~/.vnc/xstartup
+--- exec /etc/X11/xinit/xinitrc
++++ exec startlxde
+killall Xvnc
+rm -rf /tmp/X1*
+vncserver :1
 ```
+![vnc3](/assets/img/vnc3.png)
+
+Ok，到此为止
