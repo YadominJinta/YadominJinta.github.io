@@ -61,21 +61,38 @@ $ rm -rf $PREFIX/tmp/.X*
 想必你一定已经注意到了，Extra源里实在是没什么可以玩的，没有什么GUI应用。那么我们还有另一种玩法，用proot启动正常的Linux发行版，在Linux里面启动vnc。  
 但是，怎么安装别的Linux发行版呢？  
 这里我们可以用我正在维护的[atilo](https://github.com/YadominJinta/atilo)，按照README中的说明，安装一个发行版，这里以我最喜欢的Fedora28为例。  
-
 ``` bash
+# For Fedora
 $ startfedora
 dnf makecache
 dnf install tigervnc-server 
 dnf groupinstall LXDE
+# for Debian
+$ startdebian
+apt update
+apt install --no-install-recommands tigervnc-standalone-server lxde
+
+# 启动Vnc
 vncserver :1
 # 与上面相同
+# Fedora
 vim ~/.vnc/xstartup
 --- exec /etc/X11/xinit/xinitrc
 +++ exec startlxde
 killall Xvnc
 rm -rf /tmp/X1*
 vncserver :1
-```
-![vnc3](/assets/img/vnc3.png)
 
+# Debian 
+vim /etc/X11/Xvnc-session
+--- exec /etc/X11/Xsession "$@"
++++ exex startlxde
+killall Xtigervnc # 这里进程名为Xtigervnc，与Fedora不同
+rm -rf /tmp/.X1*
+```
+
+~~被人吐槽了，我加个Debian吧~~
+
+![vnc3](/assets/img/vnc3.png)
+![vnc4](/assets/img/vnc4.png)
 Ok，到此为止
