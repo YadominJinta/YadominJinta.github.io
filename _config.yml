@@ -30,15 +30,15 @@ nightMode: true
 
 # Comments 评论功能
 comments:
-  disqus: false
-  disqus_url: 'https://liaokeyu.disqus.com/embed.js'
+  disqus: true
+  disqus_url: 'https://yadominde-ge-ren-bo-ke.disqus.com/embed.js'
 
 # MathJax 公式支持 by Ray-Eldath
 mathjax: true
 
 # Share
 social-share: true
-social-share-items: ['wechat', 'weibo', 'douban', 'twitter']
+social-share-items: ['wechat', 'weibo', 'douban', 'twitter', 'qq']
 
 # theme color 主题皮肤
 theme-color: 'default'  # pink or default
