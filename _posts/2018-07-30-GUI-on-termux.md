@@ -10,7 +10,7 @@ title: 在termux上使用图形化
 准确来说，原生是不可能的，你不可能在termux那个窗口里用GUI的，你需要准备[VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)或者[XServer XSDL](https://play.google.com/store/apps/details?id=x.org.server)，这里以VNC Viewer为例。
 
 ### 添加仓库
-Termux的源中是没有X的，所以为了安装X，我们在这里添加一个社区源——[Termix-Extra-Packages](https://github.com/xeffyr/termux-extra-packages)
+Termux的源中是没有X的，所以为了安装X，我们在这里添加一个社区源——[Termux-Extra-Packages](https://github.com/xeffyr/termux-extra-packages)
 ``` bash
 # 安装依赖
 pkg in dirmngr
