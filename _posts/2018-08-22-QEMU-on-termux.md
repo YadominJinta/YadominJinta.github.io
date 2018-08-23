@@ -3,6 +3,7 @@ layout: post
 date: 2018-08-22
 title: 在Termux上使用QEMU
 tag: termux
+---
 几年前，我在安卓上折腾Win虚拟机的时候，试了各种各样奇怪的存在，包括[Bochs](https://play.google.com/store/apps/details?id=net.sourceforge.bochs)和[Limbo](https://play.google.com/store/apps/details?id=fr.energycube.android.app.com.limbo.emu.main.armv7)，以及贴吧的APQ，但都觉得不太好用。现在发现Termux下也有能跑虚拟机的，也就是大名鼎鼎的[QEMU](https://github.com/qemu/qemu)，上面提到的几个软件，其实都是基于QEMU。撒，就让我来介绍一下吧。
 
 ## 添加仓库
