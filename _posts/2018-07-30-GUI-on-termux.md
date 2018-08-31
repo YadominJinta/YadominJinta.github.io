@@ -22,7 +22,7 @@ echo "deb https://termux.xeffyr.ml/ extra main x11" >> $PREFIX/etc/sources.list
 pkg up
 # 安装图形化相关软件
 # 这里以TigerVNC为接口，i3为wm
-pkg in tiger tigervnc i3 aterm
+pkg in tigervnc i3 aterm
 ```
 
 ### 启动VNC
@@ -55,7 +55,7 @@ $ rm -rf $PREFIX/tmp/.X*
 现在我们打开之前下载的VNC Viewer，点击右下角的+号，在Address下面填上127.0.0.1:1，Name 随便填就行，不影响，点击Create -> Connect，会出现一个不安全链接的Warn，去掉Warn Me Everytime，点击OK，然后输入密码，点击Remember，然后Ok，就可以链接上了。  
 ![vnc1](/assets/img/vnc1.png)  
 ![vnc2](/assets/img/vnc2.png)  
-  
+
 
 ## 非原生
 想必你一定已经注意到了，Extra源里实在是没什么可以玩的，没有什么GUI应用。那么我们还有另一种玩法，用proot启动正常的Linux发行版，在Linux里面启动vnc。  
