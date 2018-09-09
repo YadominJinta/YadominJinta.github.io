@@ -28,7 +28,7 @@ pkg in tigervnc i3 aterm
 ```
 
 ### Start VNC
-```
+```bash
 # Defind DISPLAY, better add to .bashrc
 export DISPLAY=:1
 
@@ -58,8 +58,63 @@ vncserver :1
 rm -rf $PREFIX/tmp/.X*
 ```
 
-现在我们打开之前下载的VNC Viewer，点击右下角的+号，在Address下面填上127.0.0.1:1，Name 随便填就行，不影响，点击Create -> Connect，会出现一个不安全链接的Warn，去掉Warn Me Everytime，点击OK，然后输入密码，点击Remember，然后Ok，就可以链接上了。  
-Now open _VNC Viewer_, click the plus icon. 
+
+Now open _VNC Viewer_, click the plus icon. Write `127.0.0.1:1` in address ,click Create -> Connect -> unset Warn Me everytime -> OK, then input your password, click remember and ok. It's connect now.
 ![vnc1](/assets/img/vnc1.png)  
 ![vnc2](/assets/img/vnc2.png)  
 
+## Non-Native
+
+You must notice that there aren't many GUI applications in extra repository. But we can use proot to run a full linux distro, and use that.
+
+But ,how can we install that ? You can install it with my script _[atilo](https://github.com/YadominJinta/atilo)_,use it as the instruction in README. For example,
+
+``` bash
+pkg in curl
+curl https://raw.githubusercontent.com/YadominJinta/atilo/master/atilo -o ~/atilo 
+chmod +x atilo
+# Download atilo
+./atilo install fedora
+# Use it to install fedora
+startfedora
+# Boot fedora
+```
+
+To use GUI , you can do as the followings,(For Fedora and Debian based)
+
+``` bash
+# For Fedora
+$ startfedora
+dnf makecache
+dnf install tigervnc-server 
+dnf groupinstall LXDE
+# for Debian
+$ startdebian
+apt update
+apt install --no-install-recommands tigervnc-standalone-server lxde
+
+# Boot Vnc
+vncserver :1
+# The same as the above
+
+# Fedora
+vim ~/.vnc/xstartup
+--- exec /etc/X11/xinit/xinitrc
++++ exec startlxde
+killall Xvnc
+rm -rf /tmp/X1*
+vncserver :1
+
+# Debian 
+vim /etc/X11/Xvnc-session
+--- exec /etc/X11/Xsession "$@"
++++ exex startlxde
+killall Xtigervnc # Notice that the process name is Xtigervnc, different with Fedora
+rm -rf /tmp/.X1*
+```
+
+![vnc3](/assets/img/vnc3.png)  
+
+![vnc4](/assets/img/vnc4.png)  
+
+ That's all ,thank you for reading..
