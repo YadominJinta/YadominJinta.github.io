@@ -78,7 +78,7 @@ QQBot 命令：
     qq group-shut ginfo minfo1,minfo2,... [t]
 ```
 基本使用方法如上，接下来实际使用看看
-```
+``` bash
 $ qq list buddy
 好友列表：
 +------+-------+----------+----------+--------+--------+------------+----------+
@@ -133,7 +133,7 @@ _我完全没有Py基础，写的不好不要吐槽_
 这个项目大抵也就如此了，要想实现更多功能，还请自己写插件。  
 
 ## [Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq)
-_Written in Perl，WebQQ协议_  
+_Written in Perl，可能是最强的WebQQ机器人_  
 看到这里你是不是想吐槽，怎么还是WebQQ，我也很无奈啊，能找到的大都是WebQQ协议的，我倒是看到过[PCQQ](https://github.com/luojinfang/PCQQ-Protocol)协议的，但是C#写的，在Termux上有些难以运行。不过，这个Mojo-WebQQ在功能上还是很强的，至少官方提供了不少插件，下面容我细细道来。  
 
 ### 安装
@@ -148,9 +148,8 @@ cpanm Webqq::Encryption
 # 安装用来密码登陆的库，但是我每次都失败😤
 ```
 ### 启动
-编辑启动脚本
-``` bash
-vim login.pl
+编辑启动脚本`vim login.pl`
+``` perl
 use Mojo::Webqq;
 use Digest::MD5 qw(md5_hex);
 my $client=Mojo::Webqq->new(
@@ -168,6 +167,121 @@ $client->run();
 然后新建一个Session，输入`cp $TMPDIR/mojo*.png ~/storage/dcim/`，然后在qq里面扫码登陆，不过我这边在qq里面显示不出来这张图，所以我是在系统相册里再截一次图的。  
 
 ![qqbot5](/assets/img/qqbot5.png)  
+
+不过这个Mojo-Webqq之所以能称之为最强，主要还是在于它的插件，下面我来介绍一下它的插件。  
+### IRCShell
+如你所见，Mojo-Webqq是没有前面的那个qqbot的交互使用的方法的，所以如果需要交互使用，可以用Weechat(不是WeChat，微信)。
+``` bash
+pkg in weechat
+cpan -i Mojo::IRC::Server::Chinese
+# 安装依赖
+```
+编辑我之前说的启动脚本`vim login.pl`，在最后的run()之前添加
+``` perl
+$client->load("IRCShell",data=>{
+    listen=>[ {host=>"0.0.0.0",port=>6667},], #可选，IRC服务器监听的地址+端口，默认0.0.0.0:6667
+    load_friend => 0, #可选,是否初始为每个好友生成irc虚拟帐号并加入频道 #我的好友
+});
+```
+然后正常启动`perl login.pl`，登陆，接着打开我之前说的`weechat`
+``` bash
+weechat
+# 打开weechat，在weechat中输入
+/server add qq 127.0.0.1
+/connect qq
+/join #群组名
+# 比如我这里就是/join #Termux社
+# 只有第一次需要/server add ，以后直接/connect qq就行
+# 然后就可以在Termux里尽情聊天了，更多的关于Weechat的使用，请自行百度
+```
+![qqbot6](/assets/img/qqbot6.png)  
+
+### SmartReply
+智能回复其实就是前文提到的图灵机器人，同样需要你注册一个图灵的账号，这点就不多说了。那么`vim login.pl`，加入
+``` perl
+$client->load("SmartReply",data=>{
+
+    apikey          =>"'', # 填入自己的Api Key
+
+    friend_reply    => 1, #是否针对好友消息智能回复
+
+    group_reply     => 1, #是否针对群消息智能回复
+
+    allow_group     => ["PERL学习交流"],  #可选，允许插件的群，可以是群名称或群号码
+
+    ban_group       => ["私人群",123456], #可选，禁用该插件的群，可以是群名称或群号码
+
+    ban_user        => ["坏蛋",123456], #可选，禁用该插件的用户，可以是用户的显示名称或qq号码
+
+    notice_reply    => ["对不起，请不要这么频繁的艾特我","对不起，您的艾特次数太多"], #可选，提醒时用语
+
+    notice_limit    => 8 ,  #可选，达到该次数提醒对话次数太多，提醒语来自默认或 notice_reply
+
+    warn_limit      => 10,  #可选,达到该次数，会被警告
+
+    ban_limit       => 12,  #可选,达到该次数会被列入黑名单不再进行回复
+
+    ban_time        => 1200,#可选，拉入黑名单时间，默认1200秒
+
+    period          => 600, #可选，限制周期，单位 秒
+
+    is_need_at      => 1,  #默认是1 是否需要艾特才触发回复 仅针对群消息
+
+    keyword         => [qw(小灰 小红 小猪)], #触发智能回复的关键字
+
+});
+```
+接下来启动程序`perl login.pl`，大致与之前的相似，就不截图了。  
+### ProgramCode
+这是一个非常有意思的插件，可以在QQ上写代码并显示运行结果。
+``` perl
+$client->load("ProgramCode");
+```
+然后在QQ里面向机器人发送
+``` txt
+code|语言>>>
+代码
+```
+比如我这里
+``` csharp
+code|csharp>>>
+using System;
+namespace Hello
+{
+    class Program
+    {
+        public static void Main()
+        {
+            Console.WriteLine("C#是世界上最好的语言");
+        }
+    }
+}
+```
+![qqbot4](/assets/img/qqbot4.png)  
+
+更多用法请参考[官方文档](https://metacpan.org/pod/distribution/Mojo-Webqq/doc/Webqq.pod)
+
+
+## 其他版本
+还有许多不同语言和协议的qq机器人，这里就不一一详细介绍了，只做个列表。  
+** [SmartQQBot](https://github.com/Yinzo/SmartQQBot) **：同样是用Python写的，不过乍一看感觉比之前的QQBot项目好用一点。  
+ **[qqbot](https://github.com/xhan/qqbot)
+** ：CoffeeScript版本，没试过。  
+
+另外再提两个PCQQ协议的项目，不过都是C#的，我在Termux用mono并没有通过编译，还是等我下一篇《为Termux上编译Dotnet Core》出来再看看吧。  
+
+ **[QQBot](https://github.com/VeroFess/QQBot)
+** ：这个似乎并不怎么靠谱，因为我在电脑上也没能编译过。  
+ **[PCQQ-Protocol](https://github.com/luojinfang/PCQQ-Protocol)
+** ：这个在PC上能够正常使用，但是功能还是比较孱弱，主要还是开发的时间比较短。  
+
+## 结语
+这篇我写了很长时间，本以为开学之前就能写完，结果竟然脱了三个星期，高三啊，确实不一样。所以以后更新肯定比较随性，难受。  
+
+另外，能看到下面评论区(Disqus插件被墙)的朋友，能给个评论吗？总感觉这个博客就只有一个人😂。
+
+
+
 
 
 
