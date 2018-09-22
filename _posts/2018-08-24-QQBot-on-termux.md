@@ -3,6 +3,7 @@ date: 2018-08-24
 title: 在termux上玩QQ机器人
 layout: post
 tag: termux
+cover: https://i.loli.net/2018/09/15/5b9c4e0ba1e62.png
 ---
 
 QQ机器人是个好玩的东西，也有很多解决方案，比如最著名的[酷Q机器人](https://cqp.cc/)
@@ -200,35 +201,20 @@ weechat
 智能回复其实就是前文提到的图灵机器人，同样需要你注册一个图灵的账号，这点就不多说了。那么`vim login.pl`，加入
 ``` perl
 $client->load("SmartReply",data=>{
-
     apikey          =>"'', # 填入自己的Api Key
-
     friend_reply    => 1, #是否针对好友消息智能回复
-
     group_reply     => 1, #是否针对群消息智能回复
-
     allow_group     => ["PERL学习交流"],  #可选，允许插件的群，可以是群名称或群号码
-
     ban_group       => ["私人群",123456], #可选，禁用该插件的群，可以是群名称或群号码
-
     ban_user        => ["坏蛋",123456], #可选，禁用该插件的用户，可以是用户的显示名称或qq号码
-
     notice_reply    => ["对不起，请不要这么频繁的艾特我","对不起，您的艾特次数太多"], #可选，提醒时用语
-
     notice_limit    => 8 ,  #可选，达到该次数提醒对话次数太多，提醒语来自默认或 notice_reply
-
     warn_limit      => 10,  #可选,达到该次数，会被警告
-
     ban_limit       => 12,  #可选,达到该次数会被列入黑名单不再进行回复
-
     ban_time        => 1200,#可选，拉入黑名单时间，默认1200秒
-
     period          => 600, #可选，限制周期，单位 秒
-
     is_need_at      => 1,  #默认是1 是否需要艾特才触发回复 仅针对群消息
-
     keyword         => [qw(小灰 小红 小猪)], #触发智能回复的关键字
-
 });
 ```
 接下来启动程序`perl login.pl`，大致与之前的相似，就不截图了。  
@@ -264,21 +250,20 @@ namespace Hello
 
 ## 其他版本
 还有许多不同语言和协议的qq机器人，这里就不一一详细介绍了，只做个列表。  
-** [SmartQQBot](https://github.com/Yinzo/SmartQQBot) **：同样是用Python写的，不过乍一看感觉比之前的QQBot项目好用一点。  
- **[qqbot](https://github.com/xhan/qqbot)
-** ：CoffeeScript版本，没试过。  
+**[SmartQQBot](https://github.com/Yinzo/SmartQQBot)**：同样是用Python写的，不过乍一看感觉比之前的QQBot项目好用一点。  
+ **[qqbot](https://github.com/xhan/qqbot)** ：CoffeeScript版本，没试过。  
 
 另外再提两个PCQQ协议的项目，不过都是C#的，我在Termux用mono并没有通过编译，还是等我下一篇《为Termux上编译Dotnet Core》出来再看看吧。  
 
- **[QQBot](https://github.com/VeroFess/QQBot)
-** ：这个似乎并不怎么靠谱，因为我在电脑上也没能编译过。  
- **[PCQQ-Protocol](https://github.com/luojinfang/PCQQ-Protocol)
-** ：这个在PC上能够正常使用，但是功能还是比较孱弱，主要还是开发的时间比较短。  
+ **[QQBot](https://github.com/VeroFess/QQBot)** ：这个似乎并不怎么靠谱，因为我在电脑上也没能编译过。  
+ **[PCQQ-Protocol](https://github.com/luojinfang/PCQQ-Protocol)** ：这个在PC上能够正常使用，但是功能还是比较孱弱，主要还是开发的时间比较短。  
 
 ## 结语
 这篇我写了很长时间，本以为开学之前就能写完，结果竟然脱了三个星期，高三啊，确实不一样。所以以后更新肯定比较随性，难受。  
 
-另外，能看到下面评论区(Disqus插件被墙)的朋友，能给个评论吗？总感觉这个博客就只有一个人😂。
+另外，能看到下面评论区(Disqus插件被墙)的朋友，能给个评论吗？总感觉这个博客就我只有一个人😂。  
+
+在文中多次出现的QQ群是[Termux社](http://qm.qq.com/cgi-bin/qm/qr?k=HJtgaLNrqIaLJ1vqsvy1vSVv8AJFfyYq)，不要问我加群问题的答案，谢谢。
 
 
 
