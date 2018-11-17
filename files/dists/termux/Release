@@ -1,0 +1,18 @@
+Codename: termux
+Version: 1
+Architectures: all
+Description: termux repository
+Suite: termux
+Date: Sat, 17 Nov 2018 23:13:19 UTC
+MD5Sum: 
+ 5595e9693f7d23fc5dd0d9009cff6b5d 1269 extras/binary-all/Packages
+ 555c5a4d51fd83e1395a2d59660fc358 700 extras/binary-all/Packages.xz
+SHA1: 
+ 05ac99287d224a12389a1024f84800276b3fdfff 1269 extras/binary-all/Packages
+ 4cbad416b8d628f151a0e4c211dff13a240c5c87 700 extras/binary-all/Packages.xz
+SHA256: 
+ f010c1d4ecfee27e7709ab293783e39cc9d5b78d07481f97b5f4af92bf3a1168 1269 extras/binary-all/Packages
+ 977e51ab447acff07d08fa583654fd8a3c97b5a8459762a98aa6487a67ae09a8 700 extras/binary-all/Packages.xz
+SHA512: 
+ 0f4d89bf0b5071435696f63ed073ec10df9535e95a1bdde3c627a7a46f4312f1be273a337056173a380514e02f8d702cad84a03437aaa46e464eb7df3295f9f6 1269 extras/binary-all/Packages
+ 2526d4343d5882ab627e88a655a9a8ec587d54100b5f7ab2181688b7778600a17da85762b7b6596cd845da782276e522d32f03d3880355bd3c0dcd45ca3731c7 700 extras/binary-all/Packages.xz

@@ -1,0 +1,32 @@
+Package: atilo-cn
+Version: 1.3
+Maintainer: Yadomin Jinta @YadominJinta
+Installed-Size: 10 kB
+Depends: tar,pv,proot,grep,curl
+Description: A bash script to help you install Linux on termux.
+Conflicts: atilo
+Homepage: https://github.com/YadominJinta/atilo
+Architecture: all
+Filename: dists/termux/extras/binary-all/atilo-cn.deb
+Size: 3800
+MD5Sum: 57a05f8d28331622c2a2dcbeba0cf633
+SHA1: a44966cc6ab1fb7a1628e74a15699e10ed28653b
+SHA256: 38e845648654f5bad3783263f2cacf90fb24dfa825c3b656473a63e7c6ad1543
+SHA512: 0d6a32fb6672d76c6909baade83fa19991a115153bb9d05eed10734127ed8fbeb7ec67abacf4fd3c4fec54e8e0994a0b97b67444e66cd8df8f89d58fbbdc260d
+
+Package: atilo
+Version: 1.3
+Maintainer: Yadomin Jinta @YadominJinta
+Installed-Size: 10 kB
+Depends: tar,pv,proot,grep,curl
+Description: A bash script to help you install Linux on termux.
+Conflicts: atilo-cn
+Homepage: https://github.com/YadominJinta/atilo
+Architecture: all
+Filename: dists/termux/extras/binary-all/atilo.deb
+Size: 3388
+MD5Sum: ffb3c6f2e27acdf093bcb1263847a086
+SHA1: 6450553f5dd6c0a0f4fd142afb39a1680ec88b88
+SHA256: ade38effe68da5433b7bd8cdb744318f97e9ce22e96a897c0ba369c63e7da1f8
+SHA512: b705763e40f5c780f1896d95c3f4e0b2570760fc07b389d90e242a8d2ad08882c048c5172f3a24dba0b33df7e0ed4e0e1470b89254035b0726bce869d2713818
+
