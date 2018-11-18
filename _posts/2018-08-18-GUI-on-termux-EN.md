@@ -11,15 +11,11 @@ I know many of you want to use GUI on termux, so I write this!
 Actually,it's impossible to use GUI in termux's windows. To use GUI, you need to prepare [VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android) or [XServer XSDL](https://play.google.com/store/apps/details?id=x.org.server), I will use VNC Viewer here.
 
 ### Add repository
-As we know, there isn't X package in Termux repository. To install X, we need to enable the community repository  _[Termux Extra Package](https://github.com/xeffyr/termux-extra-packages)_.  
+As we know, there isn't X package in Termux repository. To install X, we need to open X repo.
 
 ``` bash
-# Install dependencies 
-pkg in dirmngr 
-# Add key
-apt-key adv --keyserver pool.sks-keyservers.net --recv 9D6D488416B493F0 
-# Add repository
-echo "deb https://termux.xeffyr.ml/ extra main x11" >> $PREFIX/etc/sources.list 
+# Enable Repo
+pkg in x11-repo
 # Update database
 pkg up 
 # Install GUI packages
