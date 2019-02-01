@@ -5,9 +5,9 @@ tags: termux
 title: 在termux上使用图形化
 ---
 最近老是被人问怎么在termux上用图形化(GUI)，想来不如写一篇文章得了。
-
+~~被人吐槽写的太抽象了，我改还不行吗~~
 ## Termux原生
-准确来说，原生是不可能的，你不可能在termux那个窗口里用GUI的，你需要准备[VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)或者[XServer XSDL](https://play.google.com/store/apps/details?id=x.org.server)，这里以VNC Viewer为例。
+准确来说，原生是不可能的，你不可能在termux那个窗口里用GUI的，你需要准备[VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)或者[XServer XSDL](https://play.google.com/store/apps/details?id=x.org.server)，这里以VNC Viewer为例。(据称VNC这个太麻烦，请看后文的XSDL使用介绍)
 
 ### 添加仓库
 Termux的源中是没有X的，所以为了安装X，我们在这里添加X11的仓库
@@ -91,4 +91,49 @@ rm -rf /tmp/.X1*
 
 ![vnc3](/assets/img/vnc3.png)
 ![vnc4](/assets/img/vnc4.png)
-Ok，到此为止
+~~Ok，到此为止~~
+
+# XSDL
+XSDL这个就相对简单多了
+# Termux原生
+``` bash
+# In termux
+pkg in openbox aterm
+
+# 本来准备用i3，结果发现i3不用无线键盘
+#几乎不能正常使用，所以改成了openbox
+
+export DISPLAY=:0 
+#建议加入~/.bashrc
+
+# 然后打开XSDL，等待它启动
+openbox 
+
+```
+然后再打开openbox就可以看到界面了，，，，，，个屁啊  
+实际上你只能看到一个小小的鼠标(我第一次看的时候还以为没启动，当然你也可以配置openbox来修改背景图)，双指点击屏幕，应该会出现openbox的菜单，滑动手指移动鼠标，按返回键可以掉出键盘。  
+![xsdl1](/assets/img/xsdl1.png)  
+但是Termux上能用的GUI程序太少了，尤其是在不用外接键盘的情况下，特别难操作，所以还是换成proot系统玩吧。
+
+## 非原生
+首先要安装[Atilo](https://github.co/YadominJinta/atilo)，并通过其安装一个发行版，这里就不多赘述了。依然使用Fedora为例。  
+``` bash
+startdfedora
+
+dnf groupinstall lxde-desktop
+# 安装LXDE
+
+export DISPLAY=:0
+export PLUSE_SERVER=tcp:127.0.0.1:4172
+# 定义显示和声音变量
+# 打开XSDL，等待启动
+
+startlxde
+# 启动LXDE
+```
+![xsdl2](/assets/img/xsdl2.png)  
+![xsdl3](/assets/img/xsdl3.png)  
+  
+总得来说，这XSDL确实有它的好处，配置简单，支持声音，但是在操作性上真的很差劲，这点确实比不上VNC，至于选哪个，见仁见智吧。  
+
+鸽了好久的更新~~（其实只是旧瓶添新酒）~~终于发出来了，提前祝各位新年快乐！
