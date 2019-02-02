@@ -3,11 +3,13 @@ layout: post
 date: 2018-07-30
 tags: termux
 title: 在termux上使用图形化
+cover: https://i.loli.net/2019/02/02/5c54e434c82f6.png
 ---
 最近老是被人问怎么在termux上用图形化(GUI)，想来不如写一篇文章得了。
 ~~被人吐槽写的太抽象了，我改还不行吗~~
+# VNC
 ## Termux原生
-准确来说，原生是不可能的，你不可能在termux那个窗口里用GUI的，你需要准备[VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)或者[XServer XSDL](https://play.google.com/store/apps/details?id=x.org.server)，这里以VNC Viewer为例。(据称VNC这个太麻烦，请看后文的XSDL使用介绍)
+准确来说，原生是不可能的，你不可能在termux那个窗口里用GUI的，你需要准备[VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)或者[XServer XSDL](https://play.google.com/store/apps/details?id=x.org.server)，这里以VNC Viewer为例。(据称VNC这个太麻烦，可以看后文的XSDL使用介绍)
 
 ### 添加仓库
 Termux的源中是没有X的，所以为了安装X，我们在这里添加X11的仓库
@@ -136,4 +138,7 @@ startlxde
   
 总得来说，这XSDL确实有它的好处，配置简单，支持声音，但是在操作性上真的很差劲，这点确实比不上VNC，至于选哪个，见仁见智吧。  
 
-鸽了好久的更新~~（其实只是旧瓶添新酒）~~终于发出来了，提前祝各位新年快乐！
+鸽了好久的更新~~（其实只是旧瓶添新酒）~~终于发出来了，提前祝各位新年快乐！  
+
+最后秀一把桌面(我PC的)，以说明KDE才是世界上最好看的桌面环境XD
+![Desktop](/assets/img/desktop1.png)
