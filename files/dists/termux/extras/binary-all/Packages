@@ -1,32 +1,32 @@
 Package: atilo-cn
-Version: 1.4
+Version: 1.5
 Maintainer: Yadomin Jinta @YadominJinta
-Installed-Size: 10 kB
+Installed-Size: 52 kB
 Depends: tar,pv,proot,grep,curl
 Description: A bash script to help you install Linux on termux.
 Conflicts: atilo
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo-cn.deb
-Size: 4112
-MD5Sum: 68d703dedaf2060a0b10da498e800c88
-SHA1: 5373a6b8660d2adc0ff2b4d908c0abe2274982fa
-SHA256: 46a81eac99179f6a548ddb48f7e06ae58025a94fc5bfd06ac05f61b1a3a606fe
-SHA512: 4c59a514889d06fca6c711a83ed1681bea8d4cb59994fb7006c75ccdd66c8a1aea7cf6a300952842e0713df7968f12a97eedcf8cd0ae61cdbc40d3817cb68d4f
+Size: 4544
+MD5Sum: c5a31b61bf67de699057031d2219519d
+SHA1: 8f1f5276576e77b467600b52973bb3fe0998c94a
+SHA256: 7fe37a77bc0825c0c1dd9a9f6ae614c69e66ee9d9a02ca7f67f3b13697ed5de0
+SHA512: 1088451d66f25cabc392d24ec0e51826403d38d1fbbbfd97c077f0148e2f0d9452e8f921badf42b341ad12e9c69b084771ff9999a4af48ebdd7d6bfd7ffe54bd
 
 Package: atilo
-Version: 1.4
+Version: 1.5
 Maintainer: Yadomin Jinta @YadominJinta
-Installed-Size: 10 kB
+Installed-Size: 56 kb
 Depends: tar,pv,proot,grep,curl
 Description: A bash script to help you install Linux on termux.
 Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo.deb
-Size: 3388
-MD5Sum: 6f788af3aca5afc22a262a367bc172ff
-SHA1: 8597b723827d995a36af50fce263e785fa36eb20
-SHA256: 4a2a8c2a9ce8dbb12367d72d75ca077475823d52f8abfc091460e68676faab03
-SHA512: f9fe7d14ad55fd6359c8b4189d31a702af8849e1183c7796e036f41a93c231fa19eb9a3d394e9b77115c5d4d615db0d5faeaa58c9b24be912a2b5ad936f2fec6
+Size: 4268
+MD5Sum: da6600ac42682dfffe6150a4c362c319
+SHA1: 1b278369ea8cdef117303f405d5859b80b066fc7
+SHA256: 4449c3ff533a3c8a50fcddbdb1be412e36f16a973890ac02f745403ee7caafe5
+SHA512: 7ce9d40b9ebddafb1509fb6d3d03c7adf135733d38d1f4b35f5f65d9129800b1db0351586e3f180082b0f975da5d40e170ee811584f60be7f5a78f63fc83e119
 
