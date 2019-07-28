@@ -6,6 +6,7 @@ tag: termux
 cover: https://i.loli.net/2018/09/15/5b9c4e0ba1e62.png
 ---
 
+WebQQ已于2019.01.01关闭，本文已废弃  
 QQ机器人是个好玩的东西，也有很多解决方案，比如最著名的[酷Q机器人](https://cqp.cc/)
 ，到这个只能在PC上用。安卓上能用的[Sq QQ机器人](https://www.coolapk.com/apk/com.specher.qqrobot)，但是这个要Xposed，虽然基于手机qq注入，功能比较强，但是对我这种连Root都没有的用户，emmmm。所以我就来介绍**几个**能在Termux上玩的QQ机器人。
 
