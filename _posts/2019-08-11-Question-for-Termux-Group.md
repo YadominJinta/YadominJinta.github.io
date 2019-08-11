@@ -35,8 +35,8 @@ cover: https://i.loli.net/2019/08/11/GvZTUSfRWY9w628.png
 
 **最后，将你的答案大写的UTF-8字符编码成base64格式，发给QQ审批。**  
 例如，我的答案是  
-1.A 2.ABC 3.ABC 4.A 5.A  
-那么你需要编码的字符串为 'AABCABCAA'  
-编码后的字符串为 'QUFCQ0FCQ0FBCg=='  
+1.A 2.ABCDE 3.ABCD 4.A 5.A  
+那么你需要编码的字符串为 'AABCDEABCDAA'  
+编码后的字符串为 'QUFCQ0RFQUJDREFBCg=='  
 
 如何你对上述问题有疑问，推荐你可以阅读[命令行的艺术](https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md)和[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，从中寻找答案，当然，你也可以[Baidu](https://baidu.com)或者[Google](https://google.com)
