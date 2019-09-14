@@ -1,5 +1,5 @@
 Package: atilo-cn
-Version: 1.7
+Version: 1.7.1
 Maintainer: Yadomin Jinta @YadominJinta
 Installed-Size: 56 kb
 Depends: tar,pv,proot,grep,curl,libcurl
@@ -8,11 +8,11 @@ Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo-cn.deb
-Size: 4632
-MD5Sum: 6e7445fd7d91830111b92729a9b19097
-SHA1: 9304ae3c3a1365f84771ee04a57661803b6db4a3
-SHA256: c4160458400376f0fafd8bdb2b4b7af2e9bfd6a9626bb2483d5171ac2185d9cf
-SHA512: 8f4b738a799143e8b4b9aefd83152fd4f6f9a407a597f5fa33ddadb979958d185b9ffaef7f60f9a35155cd1a18fb510c891d9aa0841ea0e3700a08bb83caaffd
+Size: 4788
+MD5Sum: 45e141eb061eebc561b5d8095ae22a16
+SHA1: 2d30912873b032e6beab97c80024eee95e01238e
+SHA256: b51d4d685e4fbaac21ab406b4cf7b2eb01378a45d08a9cdb0e99e07af9e7659d
+SHA512: b575d221554410dcd7ebc8feef5890b7c47a827d8020ccf60ce171784ba78a3ba742d03e6f9a45cab213a8fb50eedb1a8dac7e3beeee6e70c233504e69b9b0d3
 
 Package: atilo
 Version: 1.7
