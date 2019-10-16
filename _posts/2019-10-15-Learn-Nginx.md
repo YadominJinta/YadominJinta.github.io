@@ -1,5 +1,5 @@
 ---
-date: 2019-10-16
+date: 2019-10-15
 title: 学习使用nginx
 cover: https://nginx.org/nginx.png
 tags: Linux
