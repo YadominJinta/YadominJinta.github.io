@@ -6,7 +6,53 @@ tags: Linux
 cover: https://i.loli.net/2019/10/16/CqarzTRwoJiu9be.png
 ---
 
+
 当你的一个应用需要用到多个docker镜像时，你会怎么做，写一个bash/Python脚本吗？ 其实docker已经有工具可以来定义和运行复杂的应用，这就是`docker-compose`。
+
+- [安装](#%e5%ae%89%e8%a3%85)
+- [使用](#%e4%bd%bf%e7%94%a8)
+  - [术语](#%e6%9c%af%e8%af%ad)
+  - [场景](#%e5%9c%ba%e6%99%af)
+    - [Web应用](#web%e5%ba%94%e7%94%a8)
+    - [Dockerfile](#dockerfile)
+    - [docker-compose.yml](#docker-composeyml)
+    - [运行](#%e8%bf%90%e8%a1%8c)
+- [命令](#%e5%91%bd%e4%bb%a4)
+    - [`build`](#build)
+    - [`up`](#up)
+    - [`down`](#down)
+    - [`logs`](#logs)
+    - [config](#config)
+    - [`ps`](#ps)
+    - [`stop`](#stop)
+    - [`rm`](#rm)
+- [Compose模板文件](#compose%e6%a8%a1%e6%9d%bf%e6%96%87%e4%bb%b6)
+    - [build](#build)
+    - [command](#command)
+    - [depends_on](#dependson)
+    - [tmpfs](#tmpfs)
+    - [env_file](#envfile)
+    - [environment](#environment)
+    - [healthcheck](#healthcheck)
+    - [image](#image)
+    - [pid](#pid)
+    - [ports](#ports)
+    - [secrets](#secrets)
+    - [ulimits](#ulimits)
+    - [volumes](#volumes)
+- [实战NextCloud](#%e5%ae%9e%e6%88%98nextcloud)
+  - [配置文件](#%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6)
+    - [docker-compose.yml](#docker-composeyml-1)
+    - [nginx.conf](#nginxconf)
+    - [ssl.env](#sslenv)
+    - [mysql.env](#mysqlenv)
+    - [app.env](#appenv)
+  - [运行容器](#%e8%bf%90%e8%a1%8c%e5%ae%b9%e5%99%a8)
+  - [数据备份迁移](#%e6%95%b0%e6%8d%ae%e5%a4%87%e4%bb%bd%e8%bf%81%e7%a7%bb)
+    - [备份](#%e5%a4%87%e4%bb%bd)
+    - [迁移](#%e8%bf%81%e7%a7%bb)
+    - [校验](#%e6%a0%a1%e9%aa%8c)
+  - [数据库定时备份](#%e6%95%b0%e6%8d%ae%e5%ba%93%e5%ae%9a%e6%97%b6%e5%a4%87%e4%bb%bd)
 
 # 安装
 
@@ -438,4 +484,443 @@ volumes:
 
 # 实战NextCloud
 
-场景： NextCloud
+>网盘已经成为大家生活之中必不可少的工具，无奈国内的网盘要么限速，要么限制容量，而国外的网盘基本上都被挡在了墙外。这个时候，自建云就成了一个很好的选择，而NextCLoud就是自建云中的佼佼者。
+
+要求：
+
+- 使用docker-compose进行部署
+  - 使用fpm镜像
+  - 前置代理容器（nginx)
+  - 数据库容器(redis+mariadb)
+  - 使用https
+- 实现数据库的定时备份和容器的健康检查（不一定能写出来）
+
+## 配置文件
+
+### docker-compose.yml
+
+``` YAML
+
+version: '3'
+
+services:
+    app:
+        image: nextcloud:fpm-alpine
+        container_name: nextcloud_app
+        # NextCloud镜像
+        restart: unless-stopped
+        volumes:
+            - app:/var/www/html
+        env_file:
+            - ./mysql.env
+            - ./app.env
+        # 有两个环境文件
+        networks:
+            nextcloud:
+                aliases:
+                    - app
+        depends_on:
+            - mariadb
+            - redis
+        # 依赖于mariadb和redis
+        
+
+    cron:
+        image: nextcloud:fpm-alpine
+        container_name: nextcloud_cron
+        # NextCloud的定时服务镜像
+        restart: unless-stopped
+        volumes:
+            - app:/var/www/html
+        entrypoint: /cron.sh
+        depends_on:
+            - mariadb
+            - redis
+
+    omgwtfssl:
+        image: superseb/omgwtfssl
+        # 用于签名SSL证书的镜像
+        restart: "no"
+        volumes:
+          - ./certs:/certs
+        env_file:
+          - ./ssl.env
+        networks:
+            - nextcloud
+          
+    web:
+        image: nginx:alpine
+        container_name: nextcloud_web
+        # Nginx镜像，用于端口转发和ssl连接
+        restart: unless-stopped
+        volumes:
+        
+            - ./nginx.conf:/etc/nginx/nginx.conf:ro
+            - nextcloud_app:/var/www/html:ro
+            - ./certs/cloud.yadomin.ml.crt:/etc/ssl/nginx/fullchain.pem
+            - ./certs/cloud.yadomin.ml.key:/etc/ssl/nginx/privkey.pem
+        ports:
+            - "80:80"
+            - "443:443"
+            # 开放了两个端口
+        networks:
+            - nextcloud
+        depends_on:
+            - app
+
+    mariadb:
+        image: mariadb:latest
+        container_name: nextcloud_mariadb
+        command: [
+            "--character-set-server=utf8mb4",
+            "--collation-server=utf8mb4_unicode_ci",
+        ]
+        volume:
+            - db:/var/lib/mysql
+        restart: unless-stopped
+        environment:
+            - MYSQL_RANDOM_ROOT_PASSWORD="yes"
+        env_file:
+            - ./mysql.env
+        networks:
+            nextcloud:
+                aliases:
+                    - mariadb
+
+    redis:
+        image: redis:alpine
+        container_name: nextcloud_cache
+        restart: unless-stopped
+        networks:
+            nextcloud:
+                aliases:
+                    - redis
+    # 两个数据库镜像
+
+volumes:
+    app:
+    db:
+networks:
+    nextcloud:
+```
+
+### nginx.conf
+
+``` nginx
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+# 需要把以下所有的cloud.yadomin.ml修改为自己的域名
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    gzip  on;
+
+    upstream php-handler {
+        server app:9000;
+    }
+
+    server {
+        listen 80;
+        listen [::]:80;
+
+        server_name cloud.yadomin.ml;
+        return 301 https://$server_name$request_uri;
+    }
+
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name cloud.yadomin.ml;
+
+        ssl_certificate     /etc/ssl/nginx/fullchain.pem;
+        ssl_certificate_key /etc/ssl/nginx/privkey.pem;
+
+        ssl_protocols             TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+        ssl_ciphers               ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256;
+        ssl_prefer_server_ciphers on;
+        ssl_ecdh_curve            secp384r1;
+
+        # Add headers to serve security related headers
+        # Before enabling Strict-Transport-Security headers please read into this
+        # topic first.
+        # add_header Strict-Transport-Security "max-age=15768000;
+        # includeSubDomains; preload;";
+        #
+        # WARNING: Only add the preload option once you read about
+        # the consequences in https://hstspreload.org/. This option
+        # will add the domain to a hardcoded list that is shipped
+        # in all major browsers and getting removed from this list
+        # could take several months.
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header X-Robots-Tag none;
+        add_header X-Download-Options noopen;
+        add_header X-Permitted-Cross-Domain-Policies none;
+        add_header Referrer-Policy no-referrer;
+
+        root /var/www/html;
+
+        location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+
+        # The following 2 rules are only needed for the user_webfinger app.
+        # Uncomment it if you're planning to use this app.
+        #rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+        #rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json
+        # last;
+
+        location = /.well-known/carddav {
+            return 301 $scheme://$host/remote.php/dav;
+        }
+        location = /.well-known/caldav {
+            return 301 $scheme://$host/remote.php/dav;
+        }
+
+        # set max upload size
+        client_max_body_size 10G;
+        fastcgi_buffers 64 4K;
+
+        # Enable gzip but do not remove ETag headers
+        gzip on;
+        gzip_vary on;
+        gzip_comp_level 4;
+        gzip_min_length 256;
+        gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
+        gzip_types application/atom+xml application/javascript application/json application/ld+json application/manifest+json application/rss+xml application/vnd.geo+json application/vnd.ms-fontobject application/x-font-ttf application/x-web-app-manifest+json application/xhtml+xml application/xml font/opentype image/bmp image/svg+xml image/x-icon text/cache-manifest text/css text/plain text/vcard text/vnd.rim.location.xloc text/vtt text/x-component text/x-cross-domain-policy;
+
+        # Uncomment if your server is build with the ngx_pagespeed module
+        # This module is currently not supported.
+        #pagespeed off;
+
+        location / {
+            rewrite ^ /index.php$request_uri;
+        }
+
+        location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+            deny all;
+        }
+        location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console) {
+            deny all;
+        }
+
+        location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updater/.+|ocs-provider/.+)\.php(?:$|/) {
+            fastcgi_split_path_info ^(.+\.php)(/.*)$;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+            # fastcgi_param HTTPS on;
+            #Avoid sending the security headers twice
+            fastcgi_param modHeadersAvailable true;
+            fastcgi_param front_controller_active true;
+            fastcgi_pass php-handler;
+            fastcgi_intercept_errors on;
+            fastcgi_request_buffering off;
+        }
+
+        location ~ ^/(?:updater|ocs-provider)(?:$|/) {
+            try_files $uri/ =404;
+            index index.php;
+        }
+
+        # Adding the cache control header for js and css files
+        # Make sure it is BELOW the PHP block
+        location ~ \.(?:css|js|woff2?|svg|gif)$ {
+            try_files $uri /index.php$request_uri;
+            add_header Cache-Control "public, max-age=15778463";
+            # Add headers to serve security related headers (It is intended to
+            # have those duplicated to the ones above)
+            # Before enabling Strict-Transport-Security headers please read into
+            # this topic first.
+            # add_header Strict-Transport-Security "max-age=15768000;
+            #  includeSubDomains; preload;";
+            #
+            # WARNING: Only add the preload option once you read about
+            # the consequences in https://hstspreload.org/. This option
+            # will add the domain to a hardcoded list that is shipped
+            # in all major browsers and getting removed from this list
+            # could take several months.
+            add_header X-Content-Type-Options nosniff;
+            add_header X-XSS-Protection "1; mode=block";
+            add_header X-Robots-Tag none;
+            add_header X-Download-Options noopen;
+            add_header X-Permitted-Cross-Domain-Policies none;
+            add_header Referrer-Policy no-referrer;
+
+            # Optional: Don't log access to assets
+            access_log off;
+        }
+
+        location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
+            try_files $uri /index.php$request_uri;
+            # Optional: Don't log access to other assets
+            access_log off;
+        }
+    }
+
+}
+
+```
+
+### ssl.env
+
+**这个ssl最折腾人了**
+
+``` bash
+SSL_SUBJECT=cloud.yadomin.ml
+# 你要签的域名
+CA_SUBJECT=yadomin@outlook.com
+# 你的邮箱
+SSL_KEY=/certs/cloud.yadomin.ml.key
+SSL_CSR=/certs/cloud.yadomin.ml.csr
+SSL_CERT=/certs/cloud.yadomin.ml.crt
+# SSL证书的位置
+
+# 请将所有的cloud.yadomin.ml修改为自己的域名
+```
+
+### mysql.env
+
+``` bash
+MYSQL_DATABASE=nextcloud
+# 数据库名
+MYSQL_USER=nextcloud
+# 数据库用户名
+MYSQL_PASSWORD=nextcloud
+# 数据库密码
+```
+
+### app.env
+
+``` bash
+NEXTCLOUD_ADMIN_USER=nextcloud
+# Nextcloud Admin 用户名
+NEXTCLOUD_ADMIN_PASSWORD=nextcloud
+# Nextcloud Admin 密码
+NEXTCLOUD_TRUSTED_DOMAINS=cloud.yadomin.ml localhost:7002
+# 信任的域名
+
+MYSQL_HOST=mariadb
+# MYSQL数据库名称
+
+REDIS_HOST=redis
+REDIS_HOST_PORT=6379
+# Redis 数据库名称与密码
+```
+
+## 运行容器
+
+所有的文件全部放在同一个文件夹里
+
+``` bash
+docker-compose up
+```
+
+就会开始自动拉取与运行镜像，等待一会后部署成功，浏览器访问你的域名，设置管理员账户，就可以正常使用了。
+
+![](/assets/img/compose2.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+文件访问，文件分享也可以正常使用
+
+## 数据备份迁移
+
+### 备份
+
+在备份之前，应先停止docker-compose所需要备份的镜像
+
+``` bash
+docker-compose -f /path/to/nextcloud/docker-compose.yml stop
+```
+
+然后找到我们所需要备份的镜像，由于我们最重要的云盘文件全部存储在镜像的`/var/www/html`中，~~而该目录又与实体机的`app` volume中~~，所以我们需要做的就是将该镜像打包出来(使用`docker-compose`创建的容器volume会被添加前缀，所以这里其实是`nextcloud_app`，使用`docker volume ls`查看具体情况)
+
+``` bash
+cat > ./backup/run.sh <EOF
+#/bin/bash
+if [[ $1 == "backup" ]];then
+  find /data -type f -print0 |xargs -0 md5sum |sort > /backup/MD5SUM.txt
+  tar -zcvf /backup/nextcloud_app.tar.gz /data
+elif [[ $1 == "recover" ]];then
+  tar -zxvf /backup/nextcloud_app.tar.gz -C /data/
+  md5sum -c /backup/MD5SUM.txt |grep FAILED
+else
+  echo "You need to specific a command"
+  exit 1
+fi
+
+docker run --rm -v nextcloud_app:/data -v /path/to/backup:/backup ubuntu bash /backup/run.sh backup
+```
+
+然后在`/path/to/backup/`中就可以找到nextcloud_app.tar.gz
+
+### 迁移
+
+首先将备份文件和run.sh下载到对应服务器中，`scp`,`rsync`均可。
+
+然后创建一个中间容器用于恢复备份文件
+
+``` bash
+docker create -v nextcloud_app:/data --name for_migrate ubuntu true
+# 创建镜像，与原来保持一致
+
+docker run --rm --volumes-from for_migrate -v $(pwd):/backup ubuntu /backup/run.sh recover
+# 解压文件
+
+docker rm for_migrate
+# 删除中间容器
+
+cd nextcloud && docker-compose up
+# 重新部属nextcloud
+```
+
+### 校验
+
+在上一步中已经对文件进行了校验，注意看输出中是否有`FAILED`
+
+
+## 数据库定时备份
+
+修改`vim /etc/crontab`，加入如下内容
+
+``` bash
+*/30 * * * * docker run --rm -v nextcloud_db:/data -v /path/to/backup:/backup ubuntu tar zcvf db-$(date +%y-%m-%H-%M).tar.gz /data
+```
+即30Min备份一次数据库，保存`/path/to/backup/`的`db-日期.tar.gz`中
+
+别忘了`systemctl enable crond && systemctl start`
