@@ -8,11 +8,11 @@ Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo-cn.deb
-Size: 4344
-MD5Sum: 3f1f2867e0d6cc065d5f9088bdc1c9d5
-SHA1: d41b089a8d373b2bca57cf07ab1257ea9420d25f
-SHA256: ec29fffb165563c48a5bdd3ae84e75cf0c86067dba3e827b1259560d484d1597
-SHA512: 0c1d33b42e9d70493aa197d1e15aadf2254dfabd1a90c499e041c6c6178e6c51cb722257d8c00e18e5bbff3b709c49376a312c51d155f3641132db3eb9483e82
+Size: 4348
+MD5Sum: 50df544c00cea7af650f5bc5280ed1e6
+SHA1: c238cd054c4605393d9aba4c7743ea2baba52350
+SHA256: b6ba013638cb57a5335b61f4d98930d36b388d0d3253c033a406e37e83c42d15
+SHA512: cfc7f2a76871b028bbc71bd8bb573c2ec7e1a51c8558ed0acf6af4b7028edb8fecc14af44a8a5b03e4fdf03132dc7ee4d0c714648042a486e98139f4c1ac4c14
 
 Package: atilo
 Version: 2.0
