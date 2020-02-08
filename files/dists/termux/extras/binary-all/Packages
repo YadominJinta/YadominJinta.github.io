@@ -1,32 +1,32 @@
 Package: atilo-cn
-Version: 2.0
+Version: 2.0.1
 Maintainer: Yadomin Jinta @YadominJinta
 Installed-Size: 56 kb
-Depends: python
+Depends: python,proot
 Description: A bash script to help you install Linux on termux.
 Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo-cn.deb
-Size: 4348
-MD5Sum: 50df544c00cea7af650f5bc5280ed1e6
-SHA1: c238cd054c4605393d9aba4c7743ea2baba52350
-SHA256: b6ba013638cb57a5335b61f4d98930d36b388d0d3253c033a406e37e83c42d15
-SHA512: cfc7f2a76871b028bbc71bd8bb573c2ec7e1a51c8558ed0acf6af4b7028edb8fecc14af44a8a5b03e4fdf03132dc7ee4d0c714648042a486e98139f4c1ac4c14
+Size: 4380
+MD5Sum: 308bbbc4f7f336106993d4bd0ee9d31d
+SHA1: 3a6beefaf812c13b8848305b61523cb909339ae4
+SHA256: fe31cc1f34772ce3a10cb894dfcd203dc63b3cc5328fd1d14e1473bfa2aba2e7
+SHA512: 8debf2c43b437447116873c49c4f1e7ed5e2db39d3f82d135becb554964f17511c958ffe7c5f095544d840d72ce570f72d17cd7d1966fa38006a06e79199c90d
 
 Package: atilo
-Version: 2.0
+Version: 2.0.1
 Maintainer: Yadomin Jinta @YadominJinta
 Installed-Size: 56 kb
-Depends: python
+Depends: python,proot
 Description: A bash script to help you install Linux on termux.
 Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo.deb
-Size: 4004
-MD5Sum: 5df9496d651a587c7d3674431b1b5f76
-SHA1: ecb7c17e697c3567516c1eac792542982c1d1085
-SHA256: 1bcb5fdb82042d87e34e0b56fe35d91644c70dbcbd92f412fb6b01f91a594ae1
-SHA512: 047b036ff64495634eea0b5e0e03d30b19c773ad1c3d536fe2dde2e152905a5eb46855eeac32d481af426d38f573a1bde2204cb4a296e59f068c4d4080821c70
+Size: 4024
+MD5Sum: 707039f1e2c1841329929e73ef2c00b3
+SHA1: e5b0b475365a625a4755192b67df8da9ba2f1e7d
+SHA256: 293f20a7ce3db02f389c505b1088c77493bf800938c57c5486c5a906972328d6
+SHA512: 8400640da5073a6b0600a6a6f2c28f6f43cce8052881fec974a878b60dffff1134457987b93a4c3d4ad28fbedd40ede0bc9d465c36e45e4c0eec01bb88a86e83
 
