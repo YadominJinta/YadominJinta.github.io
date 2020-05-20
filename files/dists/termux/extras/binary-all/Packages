@@ -1,5 +1,5 @@
 Package: atilo-cn
-Version: 2.0.3
+Version: 2.1.0
 Maintainer: Yadomin Jinta @YadominJinta
 Installed-Size: 56 kb
 Depends: python,proot
@@ -8,14 +8,14 @@ Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo-cn.deb
-Size: 4428
-MD5Sum: 5e4f0306790abe5cf6798346edcca64f
-SHA1: acdedf48be25d42bcc0b1730029051b4290c0f1c
-SHA256: bb74ebeccffda4ee09a9c8ea56e4467d7ed651ec02ab74ba78f3193c98812286
-SHA512: 29cfbdce87863cb1410797a988e08cbeab92556616d5293ebd343cbc731173397d21c10e84317de2373ecabdd275ab9cc0ede42acbc00235205faa0ddc18fed3
+Size: 4436
+MD5Sum: c96ad66ba4c165d7c3309a267ab4322f
+SHA1: 36cb02ae3f2a47b1c65e93b8aac527d1fb29dc3c
+SHA256: 796c277750422be4faa87826770300b8bb199d625a433e1ed0b167949d7a9da2
+SHA512: af2951a8000bc65cdef3891c81bfebfa98c301988c57ad406422b04507409b833de6e7a7afd3db0d38ab2a5b8ffc4914effa04664d3b52cffb3f760f32dc0ddd
 
 Package: atilo
-Version: 2.0.3
+Version: 2.1.0
 Maintainer: Yadomin Jinta @YadominJinta
 Installed-Size: 56 kb
 Depends: python,proot
@@ -24,9 +24,9 @@ Conflicts: atilo-cn
 Homepage: https://github.com/YadominJinta/atilo
 Architecture: all
 Filename: dists/termux/extras/binary-all/atilo.deb
-Size: 4200
-MD5Sum: fa7146f933b7b4fb286a6a7f3bb31b7a
-SHA1: 5e02287c864b66b82b9f93794697fbb3fb179be1
-SHA256: 48a5566bc1255558f88e342deb1101ca7f61a6861b05861fd9282eec2b9725a3
-SHA512: dde2c890b475b14f0259837be977b35287dac73314fddb8c56f4dc07f9abd069c309038bd629b6f302963017d3c4f7ff33a134fb6fe591dc810f6c234e6a2c2d
+Size: 4216
+MD5Sum: 813f16c0c30855d9bf9fa7fbdf0e0954
+SHA1: bcc03ed81e0e4499cd0befb36e0149fe6d5ae3fc
+SHA256: d0816ba161384663ccd1893610a969c6669a12bdb9d079f2ab7ba58a7d0a4a19
+SHA512: fdb8b3cc4fc50f487ac77cdec65ed4fa779087f3ec68816ef35ca53f47579b7c06eccc1eb594ac2ee185ddf47a728578b2be24729e8d0729285555d061881d8a
 
